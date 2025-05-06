@@ -58,6 +58,18 @@ function TrafficTally() {
             >
               +1
             </button>
+            <button
+              onClick={() => updateCarCount(type, 2)}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+            >
+              +2
+            </button>
+            <button
+              onClick={() => updateCarCount(type, 5)}
+              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+            >
+              +5
+            </button>
           </div>
         </div>
       ))}
