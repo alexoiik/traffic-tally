@@ -2,7 +2,10 @@
     "trafficTally": {
       "cars": 0,
       "trucks": 0,
-      "motorcycles": 0
+      "motorcycles": 0,
+      "buses": 0,
+      "heavy_trucks": 0,
+      "tractors": 0
     }
 }
   

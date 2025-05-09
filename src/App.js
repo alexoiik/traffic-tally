@@ -3,7 +3,14 @@ import { getDatabase, ref, onValue, set } from "firebase/database"; // Firebase 
 import db from "./configuration"; // Importing Firebase config.
 
 function TrafficTally() {
-  const [cars, setCars] = useState({ cars: 0, trucks: 0, motorcycles: 0 });
+  const [cars, setCars] = useState({
+    cars: 0,
+    trucks: 0,
+    motorcycles: 0,
+    heavy_trucks: 0,
+    tractors: 0,
+    buses: 0,
+  });
 
   useEffect(() => {
     const database = getDatabase(db);
@@ -31,55 +38,76 @@ function TrafficTally() {
       .catch((error) => console.error("Error saving car data:", error));
   };
 
+  const leftColumn = ["cars", "motorcycles", "buses"];
+  const rightColumn = ["trucks", "heavy_trucks", "tractors"];
+
+  const formatLabel = (str) =>
+    str
+      .replace(/_/g, " ")
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+  const renderCounter = (type) => (
+    <div
+      key={type}
+      className="bg-gradient-to-r from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 text-center w-72 mb-6 border-2 border-transparent hover:border-white transition-all duration-300"
+    >
+      <h2 className="text-2xl font-bold text-white">{formatLabel(type)}</h2>
+      <p className="text-6xl font-extrabold text-yellow-300 my-4">{cars[type]}</p>
+
+      <div className="flex justify-center gap-3">
+        {/* Decrement button */}
+        <button
+          onClick={() => updateCarCount(type, -1)}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+        >
+          -1
+        </button>
+
+        {/* Increment buttons */}
+        <button
+          onClick={() => updateCarCount(type, 1)}
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+        >
+          +1
+        </button>
+        <button
+          onClick={() => updateCarCount(type, 2)}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+        >
+          +2
+        </button>
+        <button
+          onClick={() => updateCarCount(type, 5)}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+        >
+          +5
+        </button>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-black text-white">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold text-center my-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-black text-white px-4">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center my-6">
         TrafficTally: Road Car Counter
       </h1>
 
-      {/* Car Counters */}
-      {Object.keys(cars).map((type) => (
-        <div
-          key={type}
-          className="bg-gradient-to-r from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 text-center w-80 mb-6 border-2 border-transparent hover:border-white transition-all duration-300"
-        >
-          <h2 className="text-2xl font-bold text-white">{type.toUpperCase()}</h2>
-          <p className="text-6xl font-extrabold text-yellow-300 my-4">{cars[type]}</p>
-          <div className="flex justify-center space-x-3">
-            <button
-              onClick={() => updateCarCount(type, -1)}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-            >
-              -1
-            </button>
-            <button
-              onClick={() => updateCarCount(type, 1)}
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-            >
-              +1
-            </button>
-            <button
-              onClick={() => updateCarCount(type, 2)}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-            >
-              +2
-            </button>
-            <button
-              onClick={() => updateCarCount(type, 5)}
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-            >
-              +5
-            </button>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="flex flex-col items-center">
+          {leftColumn.map(renderCounter)}
         </div>
-      ))}
+        <div className="flex flex-col items-center">
+          {rightColumn.map(renderCounter)}
+        </div>
+      </div>
 
-      {/* Store Data Button */}
       <button
         onClick={storeCarData}
-        className="text-lg mb-6 bg-gradient-to-r from-teal-600 to-green-600 hover:from-teal-700 hover:to-green-700 text-white font-bold py-4 px-14 sm:py-3 sm:px-6 md:py-4 md:px-10 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+        className="mb-5 bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
       >
-        📊 Store Data
+        📊 Save Counts
       </button>
     </div>
   );
