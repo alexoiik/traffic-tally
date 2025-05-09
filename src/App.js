@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"; // React Imports.
-import { getDatabase, ref, onValue, set } from "firebase/database"; // Firebase Imports.
+import { getDatabase, ref, onValue, /*set*/ } from "firebase/database"; // Firebase Imports.
 import db from "./configuration"; // Importing Firebase config.
 
 function TrafficTally() {
@@ -31,12 +31,12 @@ function TrafficTally() {
   };
 
   // Storing updated counts in Firebase.
-  const storeCarData = () => {
-    const database = getDatabase(db);
-    set(ref(database, "trafficTally"), cars)
-      .then(() => alert("Car count saved successfully! 🚦"))
-      .catch((error) => console.error("Error saving car data:", error));
-  };
+  // const storeCarData = () => {
+  //   const database = getDatabase(db);
+  //   set(ref(database, "trafficTally"), cars)
+  //     .then(() => alert("Car count saved successfully! 🚦"))
+  //     .catch((error) => console.error("Error saving car data:", error));
+  // };
 
   const leftColumn = ["cars", "motorcycles", "buses"];
   const rightColumn = ["trucks", "heavy_trucks", "tractors"];
@@ -103,12 +103,12 @@ function TrafficTally() {
         </div>
       </div>
 
-      <button
+      {/* <button
         onClick={storeCarData}
         className="mb-5 bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
       >
         📊 Save Counts
-      </button>
+      </button> */}
     </div>
   );
 }
