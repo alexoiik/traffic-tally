@@ -112,7 +112,7 @@ function TrafficTally() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-black text-white px-4">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center my-6">
-        TrafficTally: Road Car Counter
+        TrafficTally: Vehicle Counter
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
