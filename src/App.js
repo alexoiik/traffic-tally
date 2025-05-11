@@ -48,45 +48,66 @@ function TrafficTally() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-  const renderCounter = (type) => (
-    <div
-      key={type}
-      className="bg-gradient-to-r from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 text-center w-72 mb-6 border-2 border-transparent hover:border-white transition-all duration-300"
-    >
-      <h2 className="text-2xl font-bold text-white">{formatLabel(type)}</h2>
-      <p className="text-6xl font-extrabold text-yellow-300 my-4">{cars[type]}</p>
+  const renderCounter = (type) => {
 
-      <div className="flex justify-center gap-3">
-        {/* Decrement button */}
-        <button
-          onClick={() => updateCarCount(type, -1)}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          -1
-        </button>
+    let imageSrc;
+    try {
+      imageSrc = require(`./img/${type}.png`);
+    } catch (e) {
+      imageSrc = null; // fallback if image doesn't exist
+    }
 
-        {/* Increment buttons */}
-        <button
-          onClick={() => updateCarCount(type, 1)}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          +1
-        </button>
-        <button
-          onClick={() => updateCarCount(type, 2)}
-          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          +2
-        </button>
-        <button
-          onClick={() => updateCarCount(type, 5)}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          +5
-        </button>
+    return (
+      <div
+        key={type}
+        className="bg-gradient-to-r from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 text-center w-72 mb-6 border-2 border-transparent hover:border-white transition-all duration-300"
+      >
+
+        <div className="flex items-center justify-center gap-2">
+          {imageSrc && (
+            <img
+              src={imageSrc}
+              alt={type}
+              className="w-8 h-8 rounded"
+            />
+          )}
+          <h2 className="text-2xl font-bold text-white">{formatLabel(type)}</h2>
+        </div>
+
+        <p className="text-6xl font-extrabold text-yellow-300 my-4">{cars[type]}</p>
+
+        <div className="flex justify-center gap-3">
+          {/* Decrement button */}
+          <button
+            onClick={() => updateCarCount(type, -1)}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            -1
+          </button>
+
+          {/* Increment buttons */}
+          <button
+            onClick={() => updateCarCount(type, 1)}
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            +1
+          </button>
+          <button
+            onClick={() => updateCarCount(type, 2)}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            +2
+          </button>
+          <button
+            onClick={() => updateCarCount(type, 5)}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            +5
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-black text-white px-4">
